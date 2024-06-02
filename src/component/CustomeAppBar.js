@@ -10,18 +10,24 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import {  useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "@fontsource/aclonica";
 
 
-const pages = [ 'About Us','Tutoring','Blog','Contact', 'Join with Us'];
+const pages = [
+  { title: 'About Us', navigate: "/about" },
+  { title: 'Tutoring', navigate: "/tutoring" },
+  { title: 'Blog', navigate: "/blog" },
+  { title: 'Contact', navigate: "/contact" },
+  { title: 'Join with Us', navigate: "/contact" }
+];
 
 
 function ResponsiveAppBar() {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -30,7 +36,7 @@ function ResponsiveAppBar() {
   const handleOpenUserNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  
+
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -41,30 +47,27 @@ function ResponsiveAppBar() {
   };
 
   const toNavigate = () =>
-  navigate("/")
-
-
-  
+    navigate("/")
 
   return (
-    <AppBar position="static" sx={{backgroundColor:'white', border:'6px solid #EEEFF4'}}>
+    <AppBar position="static" sx={{ backgroundColor: 'white', border: '6px solid #EEEFF4' }}>
       <Container maxWidth="xl"  >
         <Toolbar disableGutters >
-          
+
           <Typography
             variant="h6"
             noWrap
             component="a"
             href=""
-            
+
             sx={{
-              
+
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'Aclonica',
               fontWeight: 700,
-              justifyContent: 'center', 
+              justifyContent: 'center',
               letterSpacing: '.3rem',
-              paddingTop:'2px',
+              paddingTop: '2px',
               color: 'lime',
               textDecoration: 'none',
               border: '8px double',
@@ -106,9 +109,9 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" >{page}</Typography>
+              {pages.map((page, index) => (
+                <MenuItem key={index} onClick={() => navigate(page.navigate)}>
+                  <Typography textAlign="center" >{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -130,18 +133,18 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
 
-            
+
           >
             Logo
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:"space-evenly"}}>
-            {pages.map((page) => (
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "space-evenly" }}>
+            {pages.map((page, index) => (
               <Button
-                key={page}
-                onClick={ () => handleCloseNavMenu(page)}
-                sx={{ my: 2, color: 'black', display: 'block',fontWeight:'400' ,fontFamily:'Aclonica'}}
+                key={index}
+                onClick={() => navigate(page.navigate)}
+                sx={{ my: 2, color: 'black', display: 'block', fontWeight: '400', fontFamily: 'Aclonica' }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
@@ -149,7 +152,7 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
-    
+
   );
 }
 export default ResponsiveAppBar;
